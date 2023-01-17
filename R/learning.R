@@ -120,3 +120,24 @@ nhanes_small %>%
 # As we have created age_month before, we can reuse it in age_weeks
 # if_else--> if it is true do the first option otherwise do the other one
 # Do not forget the coma between the argument in the mutate fonction
+
+
+# Exercise 7.12 : Piping, filtering and mutating --------------------------
+
+
+# 1. BMI between 20 and 40 with diabetes
+nhanes_small %>%
+  # Format should follow: variable >= number or character
+  filter(bmi >= 20 & bmi <= 40 & diabetes == "Yes")
+
+# Pipe the data into mutate function and:
+nhanes_modified <- nhanes_small %>% # Specifying dataset
+  mutate(
+    # 2. Calculate mean arterial pressure
+    mean_arterial_pressure = ((2 * bp_dia_ave) + bp_sys_ave) / 3,
+    # 3. Create young_child variable using a condition
+    young_child = if_else(age < 6, "Yes", "No")
+  )
+
+nhanes_modified
+

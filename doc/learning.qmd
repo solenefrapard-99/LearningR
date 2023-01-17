@@ -3,3 +3,37 @@ title: "Reproducible documents"
 author: "Solène Frapard"
 format: html
 ---
+
+We can use many different kind of setting for a code chunk depending and what we want to show.
+
+```{r setup}
+#| include: false
+#This allow us to hide the messages and warnings
+# By adding "setup" it tells markdown that it is a setup chunk, it will allow you to load your library easily when you start R markdown again. We need to add here the libraries we are going to use as well as our data_set
+
+library(tidyverse)
+nhanes_small<- read_csv(here::here("data/nhanes_small.csv"))
+
+```
+
+###Table of results
+
+```{r mean-age-bmi-table}
+#| echo: false
+#| warning: false
+#| message: false
+# When writing those names, always use "-" instead of "_"
+#creation of this code chunk by doing command, option, i
+#To do | do option 7
+
+nhanes_small %>%
+  filter(!is.na(diabetes)) %>%
+  group_by(diabetes, education) %>%
+  summarize(
+    max_bmi = max(bmi, na.rm = TRUE),
+    min_bmi = min(bmi, na.rm = TRUE)
+  ) %>%
+ungroup() %>% 
+knitr::kable(caption = "Mean values of Age and bmi for each diabetes and physical activity status") #Add a heading to the table
+```
+

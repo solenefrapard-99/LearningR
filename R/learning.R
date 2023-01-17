@@ -160,4 +160,4 @@ write_csv(
     here::here("data/nhanes_small.csv") # Mean --> go to the root folder, i.e. learningR and then go to the data folder
 )
 
-
+# creation quarto doc, need to place it in the doc document

@@ -82,3 +82,41 @@ nhanes_small %>%
 nhanes_small %>%
   select(starts_with("bp")) %>%
   rename(bp_systolic = bp_sys_ave)
+
+# Filtering rows ----------------------------------------------------------
+
+# Filtering use logic and it is very easy to make mistakes, always ask for second opinion. Always mke sure that we use really basic logic.
+
+nhanes_small %>%
+  filter(phys_active != "No") # The filter will keep every person which is physically active
+
+nhanes_small %>%
+  filter(bmi >= 25, phys_active == "No") # Using a coma here is equivalent to use &
+
+nhanes_small %>%
+  filter(bmi == 25 | phys_active == "No") # To do OR, press option and 7 --> |
+# Be careful when using logic operators and especially OR
+
+
+# Arranging rows ----------------------------------------------------------
+
+nhanes_small %>%
+  arrange(desc(age), bmi, education) # Does not make much sens to sort with more than one or two variables
+
+# Mutating columns --------------------------------------------------------
+
+nhanes_small %>%
+  mutate(
+    age_month = age * 12,
+    logged_bmi = log(bmi),
+    age_weeks = age_month * 4,
+    old = if_else(
+      age >= 30,
+      "old",
+      "young"
+    )
+  )
+# Old information= new information; age_month --> This is not changing properly the data, it creates a new column to have the age in month, some for logged_bmi
+# As we have created age_month before, we can reuse it in age_weeks
+# if_else--> if it is true do the first option otherwise do the other one
+# Do not forget the coma between the argument in the mutate fonction

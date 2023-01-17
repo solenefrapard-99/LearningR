@@ -141,3 +141,15 @@ nhanes_modified <- nhanes_small %>% # Specifying dataset
 
 nhanes_modified
 
+
+# Summarizing -------------------------------------------------------------
+
+nhanes_small %>%
+  filter(!is.na(diabetes)) %>%
+  group_by(diabetes, phys_active) %>%
+  summarize(
+    max_bmi = max(bmi, na.rm = TRUE),
+    min_bmi = min(bmi, na.rm = TRUE)
+  )
+# Mutate give you the same number of row, summarize will give you back one row or if we add a group by, the number of row possible in the condition we are grouping by. na.rm=TRUE will allow us to calculate even with the missing datas
+# The filter(!is.na(diabetes)) is to keep the values that are not missing

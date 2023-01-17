@@ -1,6 +1,7 @@
 Solène Frapard
 This is a test of github push.
 Merge conflict practice
+
 TODO: Add more to the title of your project here
 
 # LearningR:

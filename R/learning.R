@@ -24,6 +24,7 @@ library(NHANES) # National Health Assessment blah blah study, example of dataset
 # Looking at data ---------------------------------------------------------
 
 glimpse(NHANES)
+
 select(NHANES, Age, Weight, BMI) # The data object in the datafirst is always the first argument, here the second argument is the column
 # This command is not changing the dataset, it is only a visualisation of one or many columns
 
@@ -39,3 +40,26 @@ select(NHANES, contains("Age")) # Similar function to select only the columns th
 
 nhanes_small <- select(NHANES, Age, Gender, BMI, Diabetes, PhysActive, BPSysAve, BPDiaAve, Education)
 nhanes_small
+
+
+# Fixing variable names ---------------------------------------------------
+
+# Those variable are in camel case and we don't want this formqat so we will need to rename them in the snakecase format
+
+nhanes_small <- rename_with(nhanes_small, snakecase::to_snake_case) # Careful we run snakecase::to_snake_case as an object so we should not have open brackets for that
+# This is use to rename all the variables at the time
+
+nhanes_small <- rename(nhanes_small, sex = gender) # First object is the dataset, the second object is the new name = the old name
+# This is to rename one variable at the time
+
+
+# Piping ------------------------------------------------------------------
+
+colnames(nhanes_small) # normal visualization
+
+nhanes_small %>%
+  colnames() # The pipe is taking the previous object and putting it at the first position
+
+nhanes_small %>%
+  select(phys_active) %>% # To make the pipe symbol, do command shift M
+  rename(physically_active = phys_active)

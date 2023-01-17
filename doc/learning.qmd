@@ -8,12 +8,11 @@ We can use many different kind of setting for a code chunk depending and what we
 
 ```{r setup}
 #| include: false
-#This allow us to hide the messages and warnings
+# This allow us to hide the messages and warnings
 # By adding "setup" it tells markdown that it is a setup chunk, it will allow you to load your library easily when you start R markdown again. We need to add here the libraries we are going to use as well as our data_set
 
 library(tidyverse)
-nhanes_small<- read_csv(here::here("data/nhanes_small.csv"))
-
+nhanes_small <- read_csv(here::here("data/nhanes_small.csv"))
 ```
 
 ###Table of results
@@ -23,8 +22,8 @@ nhanes_small<- read_csv(here::here("data/nhanes_small.csv"))
 #| warning: false
 #| message: false
 # When writing those names, always use "-" instead of "_"
-#creation of this code chunk by doing command, option, i
-#To do | do option 7
+# creation of this code chunk by doing command, option, i
+# To do | do option 7
 
 nhanes_small %>%
   filter(!is.na(diabetes)) %>%
@@ -33,7 +32,34 @@ nhanes_small %>%
     max_bmi = max(bmi, na.rm = TRUE),
     min_bmi = min(bmi, na.rm = TRUE)
   ) %>%
-ungroup() %>% 
-knitr::kable(caption = "Mean values of Age and bmi for each diabetes and physical activity status") #Add a heading to the table
+  ungroup() %>%
+  knitr::kable(caption = "Mean values of Age and bmi for each diabetes and physical activity status") # Add a heading to the table
 ```
+### Prettier table
 
+```{r prettier-table}
+#| echo: false
+nhanes_small %>%
+  filter(!is.na(diabetes), !is.na(education)) %>%
+  group_by(diabetes, education) %>%
+  summarise(
+    mean_age = mean(age, na.rm = TRUE),
+    mean_bmi = mean(bmi, na.rm = TRUE)
+  ) %>%
+  ungroup() %>%
+  mutate(
+    # Task 2a.
+    mean_age = round(mean_age, 1),
+    mean_bmi = round(mean_bmi, 1),
+    # Task 2b.
+    education = str_to_sentence(education)
+  ) %>%
+  rename(
+    # Task 3.
+    "Diabetes Status" = diabetes,
+    "Education" = education,
+    "Mean Age" = mean_age,
+    "Mean BMI" = mean_bmi
+  ) %>%
+  knitr::kable(caption = "Mean values of Age and BMI for each education and diabetes status.")
+```

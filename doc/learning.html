@@ -67,8 +67,21 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>We can use many different kind of setting for a code chunk depending and what we want to show.</p>
-<p>###Table of results</p>
+<ul>
+<li>Solène Frapard</li>
+<li>KTH</li>
+<li>SciLifeLab</li>
+</ul>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>We can use <strong>many</strong> different kind of setting for a code chunk depending and <em>what</em> we want to show.</p>
+</section>
+<section id="method-and-results" class="level1">
+<h1>Method and results</h1>
+<section id="analysis" class="level2">
+<h2 class="anchored" data-anchor-id="analysis">Analysis</h2>
+<section id="table-of-results" class="level3">
+<h3 class="anchored" data-anchor-id="table-of-results">Table of results</h3>
 <div class="cell">
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
@@ -158,8 +171,10 @@ ul.task-list li input[type="checkbox"] {
 </table>
 </div>
 </div>
+</section>
 <section id="prettier-table" class="level3">
 <h3 class="anchored" data-anchor-id="prettier-table">Prettier table</h3>
+<p>It is <strong>important</strong> to not forget to put a space after the #s to do a title</p>
 <div class="cell">
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'diabetes'. You can override using the
@@ -241,6 +256,22 @@ ul.task-list li input[type="checkbox"] {
 </table>
 </div>
 </div>
+</section>
+</section>
+</section>
+<section id="discussion" class="level1">
+<h1>Discussion</h1>
+<section id="inserting-figures-as-files-or-from-r-code" class="level2">
+<h2 class="anchored" data-anchor-id="inserting-figures-as-files-or-from-r-code">8.10 Inserting figures as files or from R code</h2>
+<div id="fig-cat" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/arrivée-dun-chaton-à-la-maison.jpeg" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1: Un petit chaton</figcaption><p></p>
+</figure>
+</div>
+<p><strong>Do not</strong> put a space between the path and the label. To do this {}, we need to do “option shift 8”. Inside this bracket {}, it is a <em>label</em>, we can then define alignment, size and plenty of parameter. The label allow us to <strong>reference the image inside the text</strong>.</p>
+<p>Cute kitten in <a href="#fig-cat">Figure&nbsp;1</a></p>
+</section>
 </section>
 
 </main>

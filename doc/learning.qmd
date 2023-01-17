@@ -21,12 +21,12 @@ library(tidyverse)
 nhanes_small <- read_csv(here::here("data/nhanes_small.csv"))
 ```
 
-#Method and results
+# Method and results
 
 ## Analysis
 
 
-###Table of results
+### Table of results
 
 ```{r mean-age-bmi-table}
 #| echo: false
@@ -47,6 +47,8 @@ nhanes_small %>%
   knitr::kable(caption = "Mean values of Age and bmi for each diabetes and physical activity status") # Add a heading to the table
 ```
 ### Prettier table
+
+It is **important** to not forget to put a space after the #s to do a title
 
 ```{r prettier-table}
 #| echo: false
@@ -76,4 +78,15 @@ nhanes_small %>%
 ```
 
 
-#Discussion
+# Discussion
+
+## 8.10 Inserting figures as files or from R code
+
+![Un petit chaton](images/arrivée-dun-chaton-à-la-maison.jpeg){#fig-cat}
+
+**Do not** put a space between the path and the label.
+To do this {}, we need to do "option shift 8". 
+Inside this bracket {}, it is a *label*, we can then define alignment, size and plenty of parameter.
+The label allow us to **reference the image inside the text**.
+
+Cute kitten in @fig-cat

@@ -4,7 +4,13 @@ author: "Solène Frapard"
 format: html
 ---
 
-We can use many different kind of setting for a code chunk depending and what we want to show.
+- Solène Frapard
+- KTH
+- SciLifeLab
+
+# Introduction
+
+We can use **many** different kind of setting for a code chunk depending and *what* we want to show.
 
 ```{r setup}
 #| include: false
@@ -14,6 +20,11 @@ We can use many different kind of setting for a code chunk depending and what we
 library(tidyverse)
 nhanes_small <- read_csv(here::here("data/nhanes_small.csv"))
 ```
+
+#Method and results
+
+## Analysis
+
 
 ###Table of results
 
@@ -63,3 +74,6 @@ nhanes_small %>%
   ) %>%
   knitr::kable(caption = "Mean values of Age and BMI for each education and diabetes status.")
 ```
+
+
+#Discussion

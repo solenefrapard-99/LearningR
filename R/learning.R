@@ -159,3 +159,5 @@ write_csv(
     nhanes_small,
     here::here("data/nhanes_small.csv") # Mean --> go to the root folder, i.e. learningR and then go to the data folder
 )
+
+

@@ -150,6 +150,12 @@ nhanes_small %>%
   summarize(
     max_bmi = max(bmi, na.rm = TRUE),
     min_bmi = min(bmi, na.rm = TRUE)
-  )
+  ) %>%
+ungroup()
 # Mutate give you the same number of row, summarize will give you back one row or if we add a group by, the number of row possible in the condition we are grouping by. na.rm=TRUE will allow us to calculate even with the missing datas
 # The filter(!is.na(diabetes)) is to keep the values that are not missing
+
+write_csv(
+    nhanes_small,
+    here::here("data/nhanes_small.csv") # Mean --> go to the root folder, i.e. learningR and then go to the data folder
+)

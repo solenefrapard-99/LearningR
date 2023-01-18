@@ -186,11 +186,53 @@ nhanes_small %>%
     filter(!is.na(diabetes), bmi <= 60) %>% 
     ggplot(aes(x = diabetes, y = bmi)) +
     geom_violin(na.rm = TRUE) +
-    geom_boxplot(na.rm = TRUE)
+    geom_boxplot(na.rm = TRUE, width=0.1)
     
 ```
 
+## Exercise to make plots with one or two variables
 
+```{r}
+library(NHANES)
+nhanes_exercise <- NHANES %>%
+  rename_with(snakecase::to_snake_case) %>%
+  rename(sex = gender)
+```
+
+```{r}
+#| label: fig-diabetesage-age
+#| fig-cap: "Counts of participants ages and age of diabetes diagnosis"
+#| fig.subcap: 
+#|   - "Diabetes age"
+#|   - "Age"
+#| layout-ncol: 2
+# Distribution of age
+ggplot(nhanes_exercise, aes(x = diabetes_age)) +
+    geom_density(na.rm = TRUE)
+
+# Distribution of age at diabetes diagnosis
+ggplot(nhanes_exercise, aes(x = age)) +
+    geom_density(na.rm = TRUE)
+```
+```{r}
+#| label: fig-smoke-now
+#| fig-cap: "Counts of smoking people at or above the age of 20"
+# Number of people who smoke now and are or above 20 years of age,
+# removing those with missing smoking status.
+nhanes_exercise %>% 
+  filter(age >= 20, !is.na(smoke_now)) %>% 
+  ggplot(aes(x = smoke_now)) +
+  geom_bar()
+```
+
+```{r}
+# BMI in relation to mean arterial pressure
+nhanes_exercise %>% 
+  mutate(mean_arterial_pressure = (bp_sys_ave + (2 * bp_dia_ave)) / 3) %>% 
+  ggplot(aes(x = bmi, y = mean_arterial_pressure)) +
+  geom_hex(na.rm = TRUE) +
+  geom_smooth()
+```
 
 
 ```

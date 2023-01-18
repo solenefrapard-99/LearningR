@@ -4,9 +4,9 @@ author: "Solène Frapard"
 format: html
 ---
 
-- Solène Frapard
-- KTH
-- SciLifeLab
+-   Solène Frapard
+-   KTH
+-   SciLifeLab
 
 # Introduction
 
@@ -24,7 +24,6 @@ nhanes_small <- read_csv(here::here("data/nhanes_small.csv"))
 # Method and results
 
 ## Analysis
-
 
 ### Table of results
 
@@ -46,6 +45,7 @@ nhanes_small %>%
   ungroup() %>%
   knitr::kable(caption = "Mean values of Age and bmi for each diabetes and physical activity status") # Add a heading to the table
 ```
+
 ### Prettier table
 
 It is **important** to not forget to put a space after the #s to do a title
@@ -77,16 +77,120 @@ nhanes_small %>%
   knitr::kable(caption = "Mean values of Age and BMI for each education and diabetes status.")
 ```
 
-
 # Discussion
 
 ## 8.10 Inserting figures as files or from R code
 
-![Un petit chaton](images/arrivée-dun-chaton-à-la-maison.jpeg){#fig-cat}
+![Un petit chaton](images/arrive%CC%81e-dun-chaton-a%CC%80-la-maison.jpeg){#fig-cat}
 
-**Do not** put a space between the path and the label.
-To do this {}, we need to do "option shift 8". 
-Inside this bracket {}, it is a *label*, we can then define alignment, size and plenty of parameter.
-The label allow us to **reference the image inside the text**.
+**Do not** put a space between the path and the label. To do this {}, we need to do "option shift 8". Inside this bracket {}, it is a *label*, we can then define alignment, size and plenty of parameter. The label allow us to **reference the image inside the text**.
 
 Cute kitten in @fig-cat
+
+In case we need, we can go to help, markdown quick reference
+
+## Visualizing data
+
+```{r}
+ggplot(nhanes_small, aes(x = bmi)) +
+    geom_histogram(na.rm = TRUE)
+
+# In the argument we add different layers to our graph. First, aes() is aesthetic, we add inside the value of the axis. We add a new layer adding "+" and jumping line. The second layer in geometry. Be careful to keep the spaces where there are.
+
+```
+```{r}
+#| fig-cap: "Distribution of BMI." 
+#| label: fig-bmi-histo
+
+#Do not put comment between the headers otherwise it is not recognizing it as headers anymore.
+#This will appear under the figure when we render it.
+# Do not forget space after definition for the indentation!
+#Now we want to remove value over 60 because there is basically no values after that in our previous graph
+nhanes_small %>% 
+    filter(bmi<=60) %>% 
+    ggplot(aes(x = bmi)) + 
+    geom_histogram(na.rm = TRUE) #To remove missing values
+```
+This is the free text refering to the picture. See @fig-bmi-histo, here we put the label tha refers to the figure.
+
+Now we want to plot categorical variables, we need to plot the count because it is discreet variables. For exemple let's plot education.
+
+### Discrete variable
+
+```{r}
+nhanes_small %>% 
+    ggplot(aes(x = education)) +
+    geom_bar()
+```
+To do a bar plot we need a x aesthetic
+
+```{r}
+nhanes_small %>% 
+    filter(!is.na(diabetes)) %>% 
+    ggplot(aes(x=diabetes)) +
+    geom_bar()
+```
+!is.na(diabetes) is the remove the NA datas prior to plotting
+
+Now we want to try to have two figure size by size, for now we need to have two figures in the same code chunk 
+
+```{r}
+#| label: fig-diabetes-education
+#| fig-cap: "Counts of diabetes and education."
+#| fig.subcap: 
+#|   - "Diabetes"
+#|   - "Education"
+#| layout-ncol: 2
+
+nhanes_small %>% 
+    filter(!is.na(diabetes)) %>% 
+    ggplot(aes(x=diabetes)) +
+    geom_bar()
+
+
+nhanes_small %>% 
+    filter(!is.na(education)) %>% 
+    ggplot(aes(x=education)) +
+    geom_bar()
+```
+ Be very careful with the number of space when doing:
+ fig.subcap: 
+   - "Diabetes"
+   - "Education"
+   
+## Plotting two variables
+### Plotting two continuous
+
+```{r}
+nhanes_small %>% 
+    ggplot(aes(x = bmi, y = bp_sys_ave)) +
+    geom_hex(na.rm = TRUE) +
+    geom_smooth(na.rm = TRUE)
+```
+
+The function geom_smooth add a regression line, there is many possibilities around that. To see what's possible, go to the console and write ?geom_smooth
+
+### Two discrete variables
+
+```{r}
+nhanes_small %>% 
+    filter(!is.na(education), !is.na(diabetes)) %>% 
+    ggplot(aes(x = diabetes, fill = education)) +
+    geom_bar(position = position_dodge())
+    
+```
+### Discrete and continuous variables
+
+```{r}
+nhanes_small %>% 
+    filter(!is.na(diabetes), bmi <= 60) %>% 
+    ggplot(aes(x = diabetes, y = bmi)) +
+    geom_violin(na.rm = TRUE) +
+    geom_boxplot(na.rm = TRUE)
+    
+```
+
+
+
+
+```
